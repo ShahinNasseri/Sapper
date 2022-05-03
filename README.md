@@ -7,7 +7,7 @@
   <h7>Service Registeration</h7>
   
   services.AddScoped<IDapperDriver, DapperDriver>(sp => new DapperDriver(appOptions.connectionString));
-  <hr>
+  <hr/>
   
   
   <h7>Query</h7>
@@ -15,19 +15,20 @@
   var res = await dapperDriver.QueryAsync<User>("SELECT * FROM [Profile].[User]" , System.Data.CommandType.Text);
   </pre>
   
-    <hr>
+    <hr/>
   <h7>Command</h7>
   <pre>
    var res = await dapperDriver.CommandAsync("DELETE FROM Profile.UserFollower", System.Data.CommandType.Text);
             res.ModifiedCount; -- > deleted records count
   </pre>
   
+      <hr/>
     <h7>StoredProcdure Query</h7>
   <pre>
   var res = await dapperDriver.QueryAsync<SpInputClassModel, SpResultClassModel>(input, "[Profile].[S_User_List]");
   </pre>
   
-    <hr>
+    <hr/>
     <h7>StoredProcdure Command</h7>
   <pre>
   var res = await dapperDriver.CommandAsync(input, "[Profile].[S_User_Save]");
