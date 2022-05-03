@@ -22,7 +22,7 @@ namespace Sapper.Driver
             Connection = new SqlConnection(connectionString);
         }
 
-        public async Task<SapperResult<TOutput>> QueryAsync<TInput, TOutput>(TInput? model, string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure, params string[] outputParamNames)
+        public async Task<SapperResult<TOutput>> QueryAsync<TInput, TOutput>(TInput model, string sql, CommandType commandType = CommandType.StoredProcedure, CancellationToken cancellationToken = default, params string[] outputParamNames)
         {
             var param = GetDynamicParamFromTModel(model, outputParamNames);
             IEnumerable<TOutput> res;
@@ -46,7 +46,7 @@ namespace Sapper.Driver
             };
         }
 
-        public async Task<SapperResult<TOutput>> QueryAsync<TOutput>(string sql, CancellationToken cancellationToken = default , CommandType commandType = CommandType.StoredProcedure)
+        public async Task<SapperResult<TOutput>> QueryAsync<TOutput>(string sql, CommandType commandType = CommandType.StoredProcedure, CancellationToken cancellationToken = default)
         {
             IEnumerable<TOutput> res;
             res = await Connection.QueryAsync<TOutput>(new CommandDefinition(commandText: sql, commandType: commandType, cancellationToken: cancellationToken));
@@ -57,7 +57,7 @@ namespace Sapper.Driver
             };
         }
 
-        public async Task<SapperResult> CommandAsync<TInput>(TInput model, string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure, params string[] outputParamNames)
+        public async Task<SapperResult> CommandAsync<TInput>(TInput model, string sql, CommandType commandType = CommandType.StoredProcedure, CancellationToken cancellationToken = default, params string[] outputParamNames)
         {
             var param = GetDynamicParamFromTModel(model, outputParamNames);
             int count;
@@ -81,7 +81,7 @@ namespace Sapper.Driver
             };
         }
 
-        public async Task<SapperResult> CommandAsync(string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure)
+        public async Task<SapperResult> CommandAsync(string sql, CommandType commandType = CommandType.StoredProcedure, CancellationToken cancellationToken = default)
         {
             var count = await Connection.ExecuteAsync(new CommandDefinition(commandText: sql, commandType: commandType, cancellationToken: cancellationToken));
 
