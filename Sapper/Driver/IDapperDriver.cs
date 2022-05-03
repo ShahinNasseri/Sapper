@@ -12,9 +12,9 @@ namespace Sapper.Driver
     public interface IDapperDriver
     {
         IDbConnection Connection { get; }
-        Task<SapperResult> CommandAsync(string sql, CancellationToken cancellationToken = default);
-        Task<SapperResult> CommandAsync<TInput>(TInput model, string sql, CancellationToken cancellationToken = default, params string[] outputParamNames);
-        Task<SapperResult<TOutput>> QueryAsync<TInput, TOutput>(TInput? model, string sql, CancellationToken cancellationToken = default, params string[] outputParamNames);
-        Task<SapperResult<TOutput>> QueryAsync<TOutput>(string sql, CancellationToken cancellationToken = default);
+        Task<SapperResult> CommandAsync(string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure);
+        Task<SapperResult> CommandAsync<TInput>(TInput model, string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure, params string[] outputParamNames);
+        Task<SapperResult<TOutput>> QueryAsync<TInput, TOutput>(TInput? model, string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure, params string[] outputParamNames);
+        Task<SapperResult<TOutput>> QueryAsync<TOutput>(string sql, CancellationToken cancellationToken = default, CommandType commandType = CommandType.StoredProcedure);
     }
 }
