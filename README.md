@@ -19,17 +19,19 @@
             res.ModifiedCount; -- > deleted records count
   </pre>
   
-    <h7>StoredProcdure Query</h7>
+  
+   StoredProcdure Query
+   
   <pre>
   var res = await dapperDriver.QueryAsync<SpInputClassModel, SpResultClassModel>(input, "[Profile].[S_User_List]");
   </pre>
   
-    <h7>StoredProcdure Command</h7>
+  StoredProcdure Command
   <pre>
   var res = await dapperDriver.CommandAsync(input, "[Profile].[S_User_Save]");
   </pre>
   
-    <h7>StoredProcdure Parameter With OutputParams</h7>
+  StoredProcdure Parameter With OutputParams
   <pre>
   var res = await dapperDriver.CommandAsync(input, "[Profile].[S_User_Save]" , cancellationToken, "Id");
   </pre>
