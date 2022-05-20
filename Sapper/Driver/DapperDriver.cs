@@ -104,7 +104,9 @@ namespace Sapper.Driver
 
             foreach (var item in propertyList)
             {
-                if (OutputParamas != null && OutputParamas.Contains(item.Name))
+                if (OutputParamas != null && OutputParamas.Contains(item.Name) && item.PropertyType == typeof(string))
+                    param.Add(item.Name, dbType: GetDBTypeByType(item.PropertyType), value: item.GetValue(model, null), direction: ParameterDirection.InputOutput ,size: -1 );
+                else if (OutputParamas != null && OutputParamas.Contains(item.Name))
                     param.Add(item.Name, dbType: GetDBTypeByType(item.PropertyType), value: item.GetValue(model, null), direction: ParameterDirection.InputOutput);
                 else if (item.PropertyType == typeof(byte[]))
                     param.Add(item.Name, dbType: DbType.Binary, value: item.GetValue(model, null), direction: ParameterDirection.Input, size: -1);
@@ -120,7 +122,7 @@ namespace Sapper.Driver
             return SqlMapper.typeMap[type];
         }
 
-        private void AddProperty(ref ExpandoObject expando, string propertyName, object propertyValue)
+        private void AddProperty(ExpandoObject expando, string propertyName, object propertyValue)
         {
             // ExpandoObject supports IDictionary so we can extend it like this
             var expandoDict = expando as IDictionary<string, object>;
